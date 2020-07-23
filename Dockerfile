@@ -13,6 +13,8 @@ rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
+COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+
 # Install requirements.
 RUN dnf makecache  \
  && dnf -y install rpm centos-release epel-release initscripts \
@@ -25,6 +27,8 @@ RUN dnf makecache  \
       python3-pip \
       unzip \
       git
+
+COPY pip /root/.pip
 
 # Install Ansible via Pip.
 RUN pip3 install $pip_packages
