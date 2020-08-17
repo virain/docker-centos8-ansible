@@ -18,6 +18,8 @@ COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 # Install requirements.
 RUN dnf makecache  \
  && dnf -y install rpm centos-release epel-release initscripts \
+ && sed -i 's|^#baseurl=https://download.fedoraproject.org/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel* \
+ && sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel* \
  && dnf -y update \
  && dnf -y install \
       sudo \
@@ -26,12 +28,13 @@ RUN dnf makecache  \
       python3 \
       python3-pip \
       unzip \
+      'dnf-command(config-manager)' \
       git
 
 COPY pip /root/.pip
 
 # Install Ansible via Pip.
-RUN pip3 install $pip_packages
+RUN pip3 install $pip_packages -i https://mirrors.aliyun.com/pypi/simple/
 
 # Disable requiretty.
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
