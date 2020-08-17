@@ -31,6 +31,8 @@ RUN dnf makecache  \
       'dnf-command(config-manager)' \
       git
 
+RUN echo "fastestmirror=True" >> /etc/dnf/dnf.conf
+
 COPY pip /root/.pip
 
 # Install Ansible via Pip.
