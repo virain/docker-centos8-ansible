@@ -22,6 +22,8 @@ RUN dnf makecache  \
  && sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel* \
  && dnf -y update \
  && dnf -y install \
+      vim \
+      wget \
       sudo \
       which \
       hostname \
