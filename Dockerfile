@@ -22,6 +22,7 @@ RUN dnf makecache  \
  && sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel* \
  && dnf -y update \
  && dnf -y install \
+      crontabs \
       vim \
       wget \
       sudo \
