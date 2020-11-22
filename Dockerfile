@@ -13,13 +13,10 @@ rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
 rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
-COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
 
 # Install requirements.
 RUN dnf makecache  \
- && dnf -y install rpm centos-release epel-release initscripts \
- && sed -i 's|^#baseurl=https://download.fedoraproject.org/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel* \
- && sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel* \
+ && dnf -y install rpm initscripts \
  && dnf -y update \
  && dnf -y install \
       crontabs \
@@ -34,12 +31,10 @@ RUN dnf makecache  \
       'dnf-command(config-manager)' \
       git
 
-RUN echo "fastestmirror=True" >> /etc/dnf/dnf.conf
-
 COPY pip /root/.pip
 
 # Install Ansible via Pip.
-RUN pip3 install $pip_packages -i https://mirrors.aliyun.com/pypi/simple/
+RUN pip3 install $pip_packages
 
 # Disable requiretty.
 RUN sed -i -e 's/^\(Defaults\s*requiretty\)/#--- \1/'  /etc/sudoers
