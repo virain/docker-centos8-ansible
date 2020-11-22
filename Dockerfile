@@ -31,8 +31,6 @@ RUN dnf makecache  \
       'dnf-command(config-manager)' \
       git
 
-COPY pip /root/.pip
-
 # Install Ansible via Pip.
 RUN pip3 install $pip_packages
 
