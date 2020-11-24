@@ -17,7 +17,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install requirements.
 RUN dnf makecache  \
- && dnf -y install rpm initscripts libselinux-python \
+ && dnf -y install rpm initscripts \
  && dnf -y update \
  && dnf -y install \
       crontabs \
