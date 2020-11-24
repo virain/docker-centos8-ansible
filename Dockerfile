@@ -3,6 +3,7 @@ ENV container=docker
 
 ENV pip_packages "ansible"
 
+
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
 systemd-tmpfiles-setup.service ] || rm -f $i; done); \
 rm -f /lib/systemd/system/multi-user.target.wants/*;\
@@ -16,7 +17,7 @@ rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Install requirements.
 RUN dnf makecache  \
- && dnf -y install rpm initscripts \
+ && dnf -y install rpm initscripts libselinux-python \
  && dnf -y update \
  && dnf -y install \
       crontabs \
