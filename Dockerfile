@@ -1,7 +1,7 @@
 FROM centos:8
 ENV container=docker
 
-ENV pip_packages "ansible"
+ENV pip_packages "ansible selinux"
 
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
