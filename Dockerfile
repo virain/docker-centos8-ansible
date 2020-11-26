@@ -1,7 +1,7 @@
 FROM centos:8
 ENV container=docker
 
-ENV pip_packages "ansible"
+ENV pip_packages "ansible selinux"
 
 RUN (cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == \
 systemd-tmpfiles-setup.service ] || rm -f $i; done); \
@@ -14,10 +14,14 @@ rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 COPY CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo
+COPY CentOS-AppStream.repo /etc/yum.repos.d/CentOS-AppStream.repo
+COPY CentOS-Extras.repo /etc/yum.repos.d/CentOS-Extras.repo
+COPY CentOS-PowerTools.repo /etc/yum.repos.d/CentOS-PowerTools.repo
+
 
 # Install requirements.
 RUN dnf makecache  \
- && dnf -y install rpm centos-release epel-release initscripts \
+ && dnf -y install rpm epel-release initscripts \
  && sed -i 's|^#baseurl=https://download.fedoraproject.org/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel* \
  && sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel* \
  && dnf -y update \
