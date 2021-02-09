@@ -42,6 +42,9 @@ RUN echo "fastestmirror=True" >> /etc/dnf/dnf.conf
 
 COPY pip /root/.pip
 
+RUN pip3 install -U pip  -i https://mirrors.aliyun.com/pypi/simple/
+
+
 # Install Ansible via Pip.
 RUN pip3 install $pip_packages -i https://mirrors.aliyun.com/pypi/simple/
 
